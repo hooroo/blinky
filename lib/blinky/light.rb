@@ -1,3 +1,5 @@
+require 'usb'
+
 module Blinky
   class Light
     INTERFACE_ID = 0
