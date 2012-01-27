@@ -4,13 +4,19 @@ module Blinky
   class Light
     INTERFACE_ID = 0
     
-    def initialize device, recipe, plugins
-        @handle = device.usb_open
-        @handle.set_configuration(device.configurations.first)
-        self.extend(recipe)   
-        plugins.each do |plugin|
-            self.extend(plugin)
-        end          
+    def initialize device_handle, recipe, plugins
+      @handle = device_handle
+      begin
+        @handle.usb_detach_kernel_driver_np(INTERFACE_ID, INTERFACE_ID)
+      rescue Errno::ENODATA => e
+        # Already detached
+      rescue Errno::ENOSYS => e
+        # usb_detach_kernel_driver_np not implemented by libusb-compat
+      end
+      self.extend(recipe)   
+      plugins.each do |plugin|
+          self.extend(plugin)
+      end          
     end
     
     def where_are_you?
