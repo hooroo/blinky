@@ -5,7 +5,7 @@ module Blinky
     def initialize device, recipe, plugins
         @handle = device.usb_open
         begin
-          @handle.usb_detach_kernel_driver_np(INTERFACE_ID, INTERFACE_ID)
+          @handle.usb_detach_kernel_driver_np(INTERFACE_ID)
         rescue Errno::ENODATA => e
           # Already detached
         end
