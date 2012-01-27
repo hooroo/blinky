@@ -29,11 +29,5 @@ module Blinky
       off!      
     end
 
-    def close
-      @handle.release_interface(INTERFACE_ID)
-      @handle.usb_close
-      @handle = nil
-    end
-    
   end
 end
