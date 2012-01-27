@@ -34,6 +34,10 @@ module Blinky
       @lights.first
     end
 
+    def close
+      @lights.each { |light| light.close }
+    end
+
     def recipe recipe_module, details
       if @recipes[details[:usb_vendor_id]].empty?
         @recipes[details[:usb_vendor_id]] = {details[:usb_product_id] => recipe_module}
